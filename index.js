@@ -159,4 +159,3 @@ class MyFormController {
 }
 
 let MyForm = new MyFormController();
-MyForm.setData({fio: 'qwe qwe qwe', phone: '+7(111)111-33-22', email: 'y@ya.ru'});
