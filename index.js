@@ -28,11 +28,11 @@ class MyFormController {
     this.form.submit(event => this.submit(event));
 
     for (let key in this.fields) {
-      this.fields[key].focus(e =>  this.fields[key].removeClass('error'));
+      this.fields[key].focus(e => this.fields[key].removeClass('error'));
     }
   }
 
-  getValidationPatterns(){
+  getValidationPatterns() {
     return {
       fio: "^[a-zA-Zа-яА-ЯёЁ]+\\s[a-zA-Zа-яА-ЯёЁ]+\\s[a-zA-Zа-яА-Я]+$",
       phone: "^\\+7\\([0-9]{3}\\)[0-9]{3}\\-[0-9]{2}\\-[0-9]{2}$",
@@ -40,7 +40,7 @@ class MyFormController {
     }
   }
 
-  getPhoneDigitsSumLimit(){
+  getPhoneDigitsSumLimit() {
     return 30;
   }
 
@@ -53,18 +53,18 @@ class MyFormController {
     }
 
     Object.keys(formData).forEach(key => {
-      if (!formData.hasOwnProperty(key)){
+      if (!formData.hasOwnProperty(key)) {
         return;
       }
       const tester = new RegExp(this.getValidationPatterns()[key]);
 
-      if (!formData[key].length || !tester.test(formData[key])){
+      if (!formData[key].length || !tester.test(formData[key])) {
         validationResult.isValid = false;
         validationResult.errorFields.push(key);
         return;
       }
 
-      if (key === "phone"){
+      if (key === "phone") {
         const digitString = formData[key].replace(/[^\d]/g, '');
         const sum = Array.from(digitString).reduce((a, b) => parseInt(a, 10) + parseInt(b, 10));
 
@@ -76,7 +76,7 @@ class MyFormController {
       }
     });
 
-    if (!validationResult.isValid){
+    if (!validationResult.isValid) {
       this.highlightFields(validationResult.errorFields);
     }
 
@@ -85,13 +85,53 @@ class MyFormController {
 
   submit(e) {
     e && e.preventDefault();
+    this.resultOutput.html('');
 
     const validationResult = this.validate();
     if (validationResult.isValid) {
-      console.log('yay!')
-    } else {
-      console.log('nay!')
+      this.sendRequest();
     }
+    return;
+  }
+
+  sendRequest(){
+    const payload = this.getData();
+    let url;
+    switch ($('#resultradio input:checked').val()){
+      case 'success':
+        url = './responses/success.json';
+        break;
+      case 'error':
+        url = './responses/error.json';
+        break;
+      case 'progress':
+        url = './responses/progress.json';
+        break;
+    }
+
+    console.log(url);
+
+    let request = fetch(url);
+    request 
+    .then(res => res.json())
+    .then(res => this.handleResponse(res));
+  }
+
+  handleResponse(res){
+    switch (res.status){
+      case 'success':
+        this.resultOutput.html('Success');
+        break;
+      case 'error':
+        this.resultOutput.html(res.reason);
+        break;
+      case 'progress':
+        this.resultOutput.html(`Processing... Next attempt in ${res.timeout}ms`);
+        return window.setTimeout(this.sendRequest.bind(this), res.timeout);
+        break;
+    }
+
+    return;
   }
 
   getData() {
@@ -102,7 +142,6 @@ class MyFormController {
     }
   }
 
-
   setData(data) {
     this.fields.fio.val(data.fio);
     this.fields.phone.val(data.phone);
@@ -110,9 +149,8 @@ class MyFormController {
     return;
   }
 
-  highlightFields(fields){
-    console.log(fields);
-    if (fields.length){
+  highlightFields(fields) {
+    if (fields.length) {
       fields.forEach(key => {
         this.fields[key].addClass('error');
       })
@@ -121,3 +159,4 @@ class MyFormController {
 }
 
 let MyForm = new MyFormController();
+MyForm.setData({fio: 'qwe qwe qwe', phone: '+7(111)111-33-22', email: 'y@ya.ru'});

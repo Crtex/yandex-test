@@ -30,13 +30,18 @@
                     <div class="input-hint">Номер телефона, который начинается на +7, и имеет формат +7(999)999-99-99. Cумма всех цифр телефона не должна превышать 30.</div>
                 </div>
             </div>
-            <div class="form-info">
+            <div class="form-info l-plr">
                     <div id="resultContainer"></div>
             </div>
             <div class="form-controls l-mt-s">
                 <div class="input-container">
                     <button class="l-p" id="submitButton" type="submit">Отправить</button>
                 </div>
+            </div>
+            <div id="resultradio">
+                <input type="radio" name="result" value="success" checked> Успех
+                <input type="radio" name="result" value="error"> Ошибка
+                <input type="radio" name="result" value="progress"> Обработка
             </div>
         </form>
     </div>
