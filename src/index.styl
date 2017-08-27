@@ -1,0 +1,162 @@
+$indent-s = 12px
+$indent-m = 24px
+$indent-l = 36px
+
+html
+    font-family Arial, Helvetica, sans-serif
+    font-size 16px
+
+paddingSizesTB(n)
+    padding-top n 
+    padding-bottom n
+paddingSizesLR(n)
+    padding-left n 
+    padding-right n 
+
+marginSizesTB(n)
+    margin-top n 
+    margin-bottom n
+marginSizesLR(n)
+    margin-top n 
+    margin-bottom n 
+
+html, body
+    height 100%
+    margin 0
+
+.h-100
+    height 100%
+
+for i in range(0, 100, 10)
+  .l-width-{i}
+    width: (i)%
+
+.c 
+    &-bg
+        &-base
+            background-color #ececec
+    &-f
+        &-red
+            color red
+
+.l-
+    &row
+        display flex
+        flex-direction row
+    &column
+        display flex
+        flex-direction column
+    &justify
+        &-start
+            justify-content flex-start
+        &-center
+            justify-content center
+        &-end
+            justify-content flex-end
+    &align
+        &-start
+            align-items flex-start
+        &-center
+            align-items center
+        &-end
+            align-items flex-end
+        &-stretch
+            align-items stretch
+    &stack
+        &>*+*
+            margin-top 20px
+    &m
+        marginSizesTB($indent-m)
+        marginSizesLR($indent-m)
+        &-l
+            marginSizesTB($indent-l)
+            marginSizesLR($indent-l)
+        &-s
+            marginSizesTB($indent-s)
+            marginSizesLR($indent-s)
+        &t
+            margin-top $indent-m
+            &-l
+                margin-top $indent-l
+            &-s
+                margin-top: $indent-s
+        &b
+            margin-bottom $indent-m
+            &-l
+                margin-bottom $indent-l
+            &-s
+                margin-bottom: $indent-s
+     &p
+        paddingSizesTB($indent-m)
+        paddingSizesLR($indent-m)
+        &-l
+            paddingSizesTB($indent-l)
+            paddingSizesLR($indent-l)
+        &-s
+            paddingSizesTB($indent-s)
+            paddingSizesLR($indent-s)
+        &lr
+            paddingSizesLR($indent-m)
+            &-l
+                paddingSizesLR($indent-l)
+            &-s
+                paddingSizesLR($indent-s)
+        &tb
+            paddingSizesTB($indent-m)
+            &-l
+                paddingSizesTB($indent-l)
+            &-s
+                paddingSizesTB($indent-s)
+        &t
+            padding-top $indent-m
+            &-l
+                padding-top $indent-l
+            &-s
+                padding-top: $indent-s
+        &b
+            padding-bottom $indent-m
+            &-l
+                padding-bottom $indent-l
+            &-s
+                padding-bottom: $indent-s
+
+#form
+    background-color #fff
+    border-radius 3px
+    min-width 300px
+    border 1px solid #d6d6d6
+
+.input-container
+    display flex
+    flex-direction column
+    input
+        padding 10px
+        font-size 14px
+        border-radius 3px
+        border 1px solid #dddddd
+        &:focus
+            outline none
+            border 1px solid #ffd232
+    label
+        color #000
+        margin-bottom 10px
+    .input-hint
+        color #ababab
+        margin-top 3px
+        font-size 10px
+    button
+        background-color #ffd232
+        cursor pointer
+        border none
+        &:hover
+            background-color #ecc63e 
+        &:focus
+            outline none
+.form
+    &header
+        font-size 20px
+    &-controls
+        border-top 1px solid #dddddd
+
+.error
+     border 1px solid red!important
