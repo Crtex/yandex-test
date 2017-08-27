@@ -17,7 +17,7 @@ class MyFormController {
       'phone': $('#phone'),
     }
 
-    this.form = $('#form');
+    this.form = $('#myForm');
     this.button = $('#submitButton');
     this.resultOutput = $('#resultContainer');
   }
@@ -29,7 +29,10 @@ class MyFormController {
 
     for (let key in this.fields) {
       this.fields[key].focus(e => this.fields[key].removeClass('error'));
+      this.fields[key].on('keydown', e => this.button.removeAttr('disabled'));
     }
+
+    $('#resultradio input').focus(e => this.button.removeAttr('disabled'));
   }
 
   getValidationPatterns() {
@@ -89,6 +92,10 @@ class MyFormController {
 
     const validationResult = this.validate();
     if (validationResult.isValid) {
+      this.button.attr('disabled', true);
+      this.resultOutput.removeClass('success');
+      this.resultOutput.removeClass('progress');
+      this.resultOutput.removeClass('error');
       this.sendRequest();
     }
     return;
@@ -121,12 +128,15 @@ class MyFormController {
     switch (res.status){
       case 'success':
         this.resultOutput.html('Success');
+        this.resultOutput.addClass('success');
         break;
       case 'error':
         this.resultOutput.html(res.reason);
+        this.resultOutput.addClass('error');
         break;
       case 'progress':
         this.resultOutput.html(`Processing... Next attempt in ${res.timeout}ms`);
+        this.resultOutput.addClass('progress');
         return window.setTimeout(this.sendRequest.bind(this), res.timeout);
         break;
     }
@@ -159,3 +169,4 @@ class MyFormController {
 }
 
 let MyForm = new MyFormController();
+MyForm.setData({fio: 'qwe qwe qwe', phone: '+7(111)111-33-22', email: 'y@ya.ru'}); 

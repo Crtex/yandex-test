@@ -177,7 +177,7 @@ body {
 .l-pb-s {
   padding-bottom: 12px;
 }
-#form {
+#myForm {
   background-color: #fff;
   border-radius: 3px;
   min-width: 300px;
@@ -196,6 +196,9 @@ body {
 .input-container input:focus {
   outline: none;
   border: 1px solid #ffd232;
+}
+.input-container input.error {
+  border: 1px solid #f00 !important;
 }
 .input-container label {
   color: #000;
@@ -217,12 +220,24 @@ body {
 .input-container button:focus {
   outline: none;
 }
-.formheader {
+.input-container button:disabled {
+  background-color: #dedede;
+}
+.input-container button:disabled:hover {
+  background-color: #dedede;
+}
+.form-header {
   font-size: 20px;
 }
 .form-controls {
   border-top: 1px solid #ddd;
 }
-.error {
-  border: 1px solid #f00 !important;
+#resultContainer.success {
+  color: #008000;
+}
+#resultContainer.error {
+  color: #f00;
+}
+#resultContainer.progress {
+  color: #ffa500;
 }

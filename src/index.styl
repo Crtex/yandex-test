@@ -120,7 +120,7 @@ for i in range(0, 100, 10)
             &-s
                 padding-bottom: $indent-s
 
-#form
+#myForm
     background-color #fff
     border-radius 3px
     min-width 300px
@@ -137,6 +137,8 @@ for i in range(0, 100, 10)
         &:focus
             outline none
             border 1px solid #ffd232
+        &.error
+            border 1px solid red!important
     label
         color #000
         margin-bottom 10px
@@ -152,11 +154,20 @@ for i in range(0, 100, 10)
             background-color #ecc63e 
         &:focus
             outline none
+        &:disabled
+            background-color #dedede
+            &:hover
+                background-color #dedede 
 .form
-    &header
+    &-header
         font-size 20px
     &-controls
         border-top 1px solid #dddddd
 
-.error
-     border 1px solid red!important
+#resultContainer
+    &.success
+        color green 
+    &.error
+        color red 
+    &.progress
+        color orange 
