@@ -7,7 +7,7 @@
 
 <body class="c-bg-base">
     <div class="l-row l-justify-center l-align-center h-100 ">
-        <form class="l-column l-width-20" id="myForm">
+        <form class="l-column l-width-20" id="myForm" action="./responses/success.json">
             <div class="form-header l-p l-pb-s">
                 <div>
                     <span class="c-f-red">Я</span><span>ндекс.Формочка</span>
@@ -39,9 +39,9 @@
                 </div>
             </div>
             <div id="resultradio">
-                <div><input type="radio" name="result" value="success" checked> Успех</div>
-                <div><input type="radio" name="result" value="error"> Ошибка</div>
-                <div><input type="radio" name="result" value="progress"> Обработка</div>
+                <div><input type="radio" name="result" value="success" onclick="MyForm.setResponse('./responses/success.json')" checked> Успех</div>
+                <div><input type="radio" name="result" value="error"  onclick="MyForm.setResponse('./responses/error.json')"> Ошибка</div>
+                <div><input type="radio" name="result" value="progress"  onclick="MyForm.setResponse('./responses/progress.json')"> Обработка</div>
             </div>
         </form>
     </div>

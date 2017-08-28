@@ -103,21 +103,7 @@ class MyFormController {
 
   sendRequest(){
     const payload = this.getData();
-    let url;
-    switch ($('#resultradio input:checked').val()){
-      case 'success':
-        url = './responses/success.json';
-        break;
-      case 'error':
-        url = './responses/error.json';
-        break;
-      case 'progress':
-        url = './responses/progress.json';
-        break;
-    }
-
-    console.log(url);
-
+    let url = this.form.attr('action');
     let request = fetch(url);
     request 
     .then(res => res.json())
@@ -128,15 +114,15 @@ class MyFormController {
     switch (res.status){
       case 'success':
         this.resultOutput.html('Success');
-        this.resultOutput.addClass('success');
+        this.setResultClass('success')
         break;
       case 'error':
         this.resultOutput.html(res.reason);
-        this.resultOutput.addClass('error');
+        this.setResultClass('error');
         break;
       case 'progress':
         this.resultOutput.html(`Processing... Next attempt in ${res.timeout}ms`);
-        this.resultOutput.addClass('progress');
+        this.setResultClass('progress');
         return window.setTimeout(this.sendRequest.bind(this), res.timeout);
         break;
     }
@@ -153,6 +139,9 @@ class MyFormController {
   }
 
   setData(data) {
+    for (let key in this.fields) {
+      this.fields[key].removeClass('error');
+    }
     this.fields.fio.val(data.fio);
     this.fields.phone.val(data.phone);
     this.fields.email.val(data.email);
@@ -165,6 +154,17 @@ class MyFormController {
         this.fields[key].addClass('error');
       })
     }
+  }
+
+  setResultClass(css) {
+    this.resultOutput.removeClass('success');
+    this.resultOutput.removeClass('progress');
+    this.resultOutput.removeClass('error');
+    this.resultOutput.addClass(css);
+  }
+
+  setResponse(url){
+    this.form.attr('action', url);
   }
 }
 
